@@ -1,0 +1,29 @@
+#action-btn {
+    height: 35px;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+#action-btn:hover {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.action-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+.action-content {
+    font-family: "Trirong", serif;
+    font-weight: bold;
+    font-size: 14px;
+}

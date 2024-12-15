@@ -1,0 +1,23 @@
+#search-bar {
+    position: relative;
+    display: flex;
+}
+
+#search-bar input {
+    height: 33px;
+    width: 300px;
+    padding: 0 30px 0 10px;
+    font-size: 14px;
+    border: 1px solid #222945;
+    border-radius: 100px;
+    font-family: "Trirong", serif;
+}
+
+#search-bar .search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 20px;
+}

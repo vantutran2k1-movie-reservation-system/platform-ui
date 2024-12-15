@@ -1,0 +1,46 @@
+header {
+    display: block;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#company-logo {
+    width: 80px;
+}
+
+.quick-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#login-section {
+    display: flex;
+    align-items: center;
+    color: white;
+    height: 35px;
+}
+
+.login-icon {
+    font-size: 20px;
+    line-height: 1
+}
+
+.login-action {
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.38);
+}
