@@ -1,4 +1,5 @@
 import "./NavBar.css";
+import {NavLink} from "react-router-dom";
 
 export default function NavBar() {
     return (
@@ -10,7 +11,7 @@ export default function NavBar() {
                 </div>
                 <div className="nav-links">
                     <div className="nav-link">Discounts</div>
-                    <div className="nav-link">About us</div>
+                    <NavLink to="/about-us" className="nav-link">About us</NavLink>
                 </div>
             </div>
         </>

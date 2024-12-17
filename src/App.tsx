@@ -1,19 +1,16 @@
 import "./App.css";
-import Header from "./components/Header/Header.tsx";
-import NavBar from "./components/NavBar/NavBar.tsx";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import AboutUs from "./pages/AboutUs/AboutUs.tsx";
+import Layout from "./pages/Layout/Layout.tsx";
 
 function App() {
     return (
         <>
-            <Header/>
-            <NavBar/>
-            <BrowserRouter>
-                <Routes>
+            <Routes>
+                <Route path="/" element={<Layout/>}>
                     <Route path="/about-us" element={<AboutUs/>}></Route>
-                </Routes>
-            </BrowserRouter>
+                </Route>
+            </Routes>
         </>
     );
 }

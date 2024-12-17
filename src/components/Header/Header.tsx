@@ -1,12 +1,15 @@
 import "./Header.css";
 import QuickAction from "../QuickAction/QuickAction.tsx";
 import MovieSearchBar from "../MovieSearchBar/MovieSearchBar.tsx";
+import {NavLink} from "react-router-dom";
 
 export default function Header() {
     return (
         <header>
             <div id="header-content">
-                <img id="company-logo" src="/src/assets/company-logo.png" alt="company-logo"/>
+                <NavLink to="/">
+                    <img id="company-logo" src="/src/assets/company-logo.png" alt="company-logo"/>
+                </NavLink>
                 <div className="quick-actions">
                     <QuickAction iconPath="/src/assets/buy-tickets-icon.svg" content="BUY TICKETS"
                                  style={{backgroundColor: "#DDBD61", color: "black"}}/>

@@ -25,5 +25,13 @@
 }
 
 .nav-link {
+    color: white;
+    text-decoration: none;
     margin-left: 20px;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+    color: #DDBD61;
+    cursor: pointer;
 }
