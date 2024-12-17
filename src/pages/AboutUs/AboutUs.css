@@ -1,0 +1,83 @@
+.about-us-container {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    background-color: #11172D;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-us-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.about-us-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0;
+}
+
+.about-us-header p {
+    font-size: 1.2rem;
+    margin-top: 0;
+}
+
+.about-us-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.about-us-mission,
+.about-us-features,
+.about-us-contact {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white;
+    background-color: #11172D;
+    border: 1px solid #771EB0;
+    text-align: center;
+}
+
+.about-us-mission h2,
+.about-us-features h2,
+.about-us-contact h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.about-us-mission p,
+.about-us-contact p {
+    color: white;
+}
+
+.about-us-features ul,
+.about-us-contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-us-features li,
+.about-us-contact li {
+    margin: 5px 0;
+}
+
+.about-us-contact a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.about-us-contact a:hover {
+    text-decoration: underline;
+}
+
+.about-us-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #777;
+}
