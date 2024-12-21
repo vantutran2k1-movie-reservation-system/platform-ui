@@ -42,8 +42,6 @@ export default function SignInForm() {
     return (
         <div className="auth-container">
             <form className="auth-form" onSubmit={handleSubmit}>
-                <h2>Sign In</h2>
-
                 <div className="form-group">
                     <FormControl variant="outlined">
                         <label htmlFor="email">Email <span className="required-field">*</span></label>

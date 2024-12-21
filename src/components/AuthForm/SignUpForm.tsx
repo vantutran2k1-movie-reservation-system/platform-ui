@@ -111,8 +111,6 @@ export default function SignUpForm() {
         <>
             <div className="auth-container">
                 <form className="auth-form" onSubmit={handleSubmit}>
-                    <h2>Sign Up</h2>
-
                     <div className="form-group">
                         <FormControl variant="outlined">
                             <label htmlFor="email">Email <span className="required-field">*</span></label>
@@ -248,6 +246,14 @@ export default function SignUpForm() {
                             <label htmlFor="dateOfBirth">Date Of Birth</label>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <DatePicker
+                                    slotProps={{
+                                        textField: {
+                                            sx: {
+                                                border: "1px solid #ccc",
+                                            },
+                                        },
+                                    }}
+                                    className="input-field"
                                     format="YYYY-MM-DD"
                                     onChange={handleDateOfBirthChange}
                                     disableFuture
