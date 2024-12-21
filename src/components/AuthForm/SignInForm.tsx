@@ -32,7 +32,6 @@ export default function SignInForm() {
     const isPasswordValid = password !== "" && passwordError === null;
 
     const canSubmit = isEmailValid && isPasswordValid;
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -93,7 +92,7 @@ export default function SignInForm() {
                     </FormControl>
                 </div>
 
-                <button type="submit" className="sign-in-button" disabled={!canSubmit}>Sign In</button>
+                <button type="submit" className="submit-button" disabled={!canSubmit}>Sign In</button>
 
                 <p className="forgot-password">
                     <a href="/reset-password">Forgot password?</a>
