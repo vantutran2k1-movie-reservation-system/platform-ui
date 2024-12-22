@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import "./AuthForm.css";
-import {FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput} from "@mui/material";
+import {Alert, FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput} from "@mui/material";
 import {validateEmail, validatePassword} from "./AuthValidator.ts";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {signIn} from "../../api/Auth.ts";
+import {LoadingButton} from "@mui/lab";
 
 export default function SignInForm() {
     const [email, setEmail] = useState<string>("");
@@ -31,13 +33,39 @@ export default function SignInForm() {
     };
     const isPasswordValid = password !== "" && passwordError === null;
 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
     const canSubmit = isEmailValid && isPasswordValid;
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(email);
-        console.log(password);
+        setIsLoading(true);
+        await signIn({email, password})
+            .then((data) => {
+                console.log("User signed in successfully:", data);
+                localStorage.setItem("authToken", JSON.stringify(data.data.token));
+                setIsSuccess(true);
+            })
+            .catch((error) => {
+                console.log(error);
+                setIsSuccess(false);
+            }).finally(() => {
+                setIsLoading(false);
+            });
     };
+
+    const signInAlert = () => {
+        if (isSuccess === null) {
+            return null;
+        }
+
+        if (!isSuccess) {
+            return <Alert severity="error">Invalid email or password. Please try again.</Alert>;
+        }
+
+        return <Alert severity="success">Sign in successfully</Alert>;
+    };
+
 
     return (
         <div className="auth-container">
@@ -90,7 +118,15 @@ export default function SignInForm() {
                     </FormControl>
                 </div>
 
-                <button type="submit" className="submit-button" disabled={!canSubmit}>Sign In</button>
+                {signInAlert()}
+
+                <LoadingButton
+                    id="submit-button"
+                    type="submit"
+                    loading={isLoading}
+                    loadingIndicator=""
+                    disabled={!canSubmit}
+                >Sign In</LoadingButton>
 
                 <p className="forgot-password">
                     <a href="/reset-password">Forgot password?</a>
