@@ -27,11 +27,17 @@ header {
     align-items: center;
     color: white;
     height: 35px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+#login-section:hover {
+    color: #DDBD61;
+    cursor: pointer;
 }
 
 .login-icon {
     font-size: 20px;
-    line-height: 1
 }
 
 .login-action {

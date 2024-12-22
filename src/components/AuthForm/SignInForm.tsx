@@ -5,6 +5,7 @@ import {validateEmail, validatePassword} from "./AuthValidator.ts";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {signIn} from "../../api/Auth.ts";
 import {LoadingButton} from "@mui/lab";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function SignInForm() {
     const [email, setEmail] = useState<string>("");
@@ -42,7 +43,6 @@ export default function SignInForm() {
         setIsLoading(true);
         await signIn({email, password})
             .then((data) => {
-                console.log("User signed in successfully:", data);
                 localStorage.setItem("authToken", JSON.stringify(data.data.token));
                 setIsSuccess(true);
             })
@@ -124,7 +124,8 @@ export default function SignInForm() {
                     id="submit-button"
                     type="submit"
                     loading={isLoading}
-                    loadingIndicator=""
+                    loadingPosition="end"
+                    endIcon={<LoginIcon/>}
                     disabled={!canSubmit}
                 >Sign In</LoadingButton>
 
