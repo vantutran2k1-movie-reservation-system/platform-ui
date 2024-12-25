@@ -3,28 +3,21 @@ import "./AuthForm.css";
 import {
     validateConfirmedPassword,
     validateDateOfBirth,
-    validateEmail,
     validateFirstName,
     validateLastName,
     validatePassword,
     validatePhoneNumber,
 } from "./AuthValidator.ts";
-import {FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput} from "@mui/material";
+import {Alert, FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {Dayjs} from "dayjs";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import {LoadingButton} from "@mui/lab";
+import {signUp} from "../../api/Auth.ts";
 
 export default function SignUpForm() {
-    const [email, setEmail] = useState<string>("");
-    const [emailError, setEmailError] = useState<string | null>(null);
-    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        setEmail(value);
-        setEmailError(validateEmail(value));
-    };
-    const isEmailValid = email !== "" && emailError === null;
-
     const [password, setPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -94,17 +87,41 @@ export default function SignUpForm() {
     };
     const isDateOfBirthValid = dateOfBirthError === null;
 
-    const canSubmit = isEmailValid && isPasswordValid && isConfirmedPasswordValid && isFirstNameValid && isLastNameValid && isPhoneNumberValid && isDateOfBirthValid;
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
+    const canSubmit = isEmailValid &&
+        isPasswordValid &&
+        isConfirmedPasswordValid &&
+        isFirstNameValid &&
+        isLastNameValid &&
+        isPhoneNumberValid &&
+        isDateOfBirthValid &&
+        !checkUserExistsLoading;
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(email);
-        console.log(password);
-        console.log(confirmedPassword);
-        console.log(firstName);
-        console.log(lastName);
-        console.log(phoneNumber);
-        console.log(dateOfBirth);
+        setIsLoading(true);
+        await signUp({email, password, firstName, lastName, phoneNumber, dateOfBirth})
+            .then(() => {
+                setIsSuccess(true);
+            })
+            .catch(() => {
+                setIsSuccess(false);
+            }).finally(() => {
+                setIsLoading(false);
+            });
+    };
+
+    const signUpAlert = () => {
+        if (isSuccess !== null && !isSuccess) {
+            return <Alert severity="error">An error occurred. Please try again.</Alert>;
+        }
+
+        if (isSuccess) {
+            return <Alert severity="success">Sign up successfully.</Alert>;
+        }
+
+        return null;
     };
 
     return (
@@ -122,6 +139,21 @@ export default function SignUpForm() {
                                 placeholder="Enter your email"
                                 error={!!emailError}
                                 className="input-field"
+                                endAdornment={
+                                    <InputAdornment position="end" className="toggle-password-btn">
+                                        <IconButton
+                                            aria-label={
+                                                showPassword ? "hide the password" : "display the password"
+                                            }
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                            onMouseUp={handleMouseUpPassword}
+                                            edge="end"
+                                        >
+                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
                             />
                             {!!emailError && <FormHelperText error>{emailError}</FormHelperText>}
                         </FormControl>
@@ -263,7 +295,16 @@ export default function SignUpForm() {
                         </FormControl>
                     </div>
 
-                    <button type="submit" className="submit-button" disabled={!canSubmit}>Sign Up</button>
+                    {signUpAlert()}
+
+                    <LoadingButton
+                        id="submit-button"
+                        type="submit"
+                        loading={isLoading}
+                        loadingPosition="end"
+                        endIcon={<AppRegistrationIcon/>}
+                        disabled={!canSubmit}
+                    >Sign Up</LoadingButton>
                 </form>
             </div>
         </>

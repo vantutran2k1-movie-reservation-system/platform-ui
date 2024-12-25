@@ -11,6 +11,14 @@ export function validateEmail(email: string): string | null {
     return null;
 }
 
+export function validateEmailForSignUp(email: string, exists: boolean | null): string | null {
+    if (exists) {
+        return "This email is already registered";
+    }
+
+    return validateEmail(email);
+}
+
 export function validatePassword(password: string): string | null {
     if (!password) {
         return "Password is required";
@@ -79,10 +87,10 @@ export function validateDateOfBirth(dateOfBirth: string): string | null {
     const inputDate = new Date(dateOfBirth);
     const today = new Date();
     if (isNaN(inputDate.getTime())) {
-        return "Invalid date.";
+        return "Invalid date";
     }
     if (inputDate >= today) {
-        return "Date of birth must be before today.";
+        return "Date of birth must be before today";
     }
 
     return null;
