@@ -1,10 +1,11 @@
 import "./Login.css";
 
-import SignUpForm from "../../components/AuthForm/SignUpForm.tsx";
+import SignUpForm from "../../components/AuthForm/SignUp/SignUpForm.tsx";
 import {Button, ButtonGroup} from "@mui/material";
 import {useState} from "react";
 import SignInForm from "../../components/AuthForm/SignIn/SignInForm.tsx";
 import {SignInProvider} from "../../components/AuthForm/SignIn/SignInContext.tsx";
+import {SignUpProvider} from "../../components/AuthForm/SignUp/SignUpContext.tsx";
 
 enum AuthMethod {
     SignUp,
@@ -48,7 +49,11 @@ export default function Login() {
                 </SignInProvider>
             );
         }
-        return <SignUpForm/>;
+        return (
+            <SignUpProvider>
+                <SignUpForm/>
+            </SignUpProvider>
+        );
     };
 
     return (

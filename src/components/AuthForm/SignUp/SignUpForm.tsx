@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "./AuthForm.css";
+import "../AuthForm.css";
 import {
     validateConfirmedPassword,
     validateDateOfBirth,
@@ -7,7 +7,7 @@ import {
     validateLastName,
     validatePassword,
     validatePhoneNumber,
-} from "./AuthValidator.ts";
+} from "../AuthValidator.ts";
 import {Alert, FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput} from "@mui/material";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
@@ -15,7 +15,8 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {Dayjs} from "dayjs";
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import {LoadingButton} from "@mui/lab";
-import {signUp} from "../../api/Auth.ts";
+import {signUp} from "../../../api/Auth.ts";
+import SignUpEmail from "./SignUpEmail.tsx";
 
 export default function SignUpForm() {
     const [password, setPassword] = useState<string>("");
@@ -89,14 +90,13 @@ export default function SignUpForm() {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
-    const canSubmit = isEmailValid &&
+    const canSubmit =
         isPasswordValid &&
         isConfirmedPasswordValid &&
         isFirstNameValid &&
         isLastNameValid &&
         isPhoneNumberValid &&
-        isDateOfBirthValid &&
-        !checkUserExistsLoading;
+        isDateOfBirthValid;
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -128,36 +128,7 @@ export default function SignUpForm() {
         <>
             <div className="auth-container">
                 <form className="auth-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <FormControl variant="outlined">
-                            <label htmlFor="email">Email <span className="required-field">*</span></label>
-                            <OutlinedInput
-                                id="email"
-                                name="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                placeholder="Enter your email"
-                                error={!!emailError}
-                                className="input-field"
-                                endAdornment={
-                                    <InputAdornment position="end" className="toggle-password-btn">
-                                        <IconButton
-                                            aria-label={
-                                                showPassword ? "hide the password" : "display the password"
-                                            }
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            onMouseUp={handleMouseUpPassword}
-                                            edge="end"
-                                        >
-                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                            />
-                            {!!emailError && <FormHelperText error>{emailError}</FormHelperText>}
-                        </FormControl>
-                    </div>
+                    <SignUpEmail/>
 
                     <div className="form-group">
                         <FormControl variant="outlined">
