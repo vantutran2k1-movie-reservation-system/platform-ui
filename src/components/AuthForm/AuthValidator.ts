@@ -1,25 +1,21 @@
-export function validateEmail(email: string): string | null {
-    if (!email) {
-        return "Email is required";
-    }
+export function validateEmail(email: string): string {
+    if (!email) return "Email is required";
 
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(email)) {
-        return "Invalid email format";
-    }
+    if (!regex.test(email)) return "Invalid email format";
 
-    return null;
+    return "";
 }
 
-export function validateEmailForSignUp(email: string, exists: boolean | null): string | null {
-    if (exists) {
-        return "This email is already registered";
+export function validateSignInPassword(password: string): string {
+    if (!password) {
+        return "Password is required";
     }
 
-    return validateEmail(email);
+    return "";
 }
 
-export function validatePassword(password: string): string | null {
+export function validateSignUpPassword(password: string): string {
     if (!password) {
         return "Password is required";
     }
@@ -28,18 +24,18 @@ export function validatePassword(password: string): string | null {
         return "Password must be between 8 and 32 characters";
     }
 
-    return null;
+    return "";
 }
 
-export function validateConfirmedPassword(password: string, confirmedPassword: string): string | null {
-    if (confirmedPassword !== password) {
-        return "Confirmed password does not match";
+export function validateConfirmPassword(password: string, confirmPassword: string): string {
+    if (confirmPassword !== password) {
+        return "Confirm password does not match";
     }
 
-    return null;
+    return "";
 }
 
-export function validateFirstName(firstName: string): string | null {
+export function validateFirstName(firstName: string): string {
     if (!firstName) {
         return "First name is required";
     }
@@ -48,10 +44,10 @@ export function validateFirstName(firstName: string): string | null {
         return "First name must be less than or equal to 255 characters";
     }
 
-    return null;
+    return "";
 }
 
-export function validateLastName(lastName: string): string | null {
+export function validateLastName(lastName: string): string {
     if (!lastName) {
         return "Last name is required";
     }
@@ -60,24 +56,18 @@ export function validateLastName(lastName: string): string | null {
         return "Last name must be less than or equal to 255 characters";
     }
 
-    return null;
+    return "";
 }
 
-export function validatePhoneNumber(phoneNumber: string): string | null {
-    if (phoneNumber) {
-        const regex = /^\+?[\d\s-]{7,15}$/;
-        if (!regex.test(phoneNumber)) {
-            return "Invalid phone number format";
-        }
-    }
+export function validatePhoneNumber(phoneNumber: string): string {
+    if (!phoneNumber) return "";
 
-    return null;
+    const regex = /^\+?[\d\s-]{7,15}$/;
+    return (!regex.test(phoneNumber)) ? "Invalid phone number format" : "";
 }
 
-export function validateDateOfBirth(dateOfBirth: string): string | null {
-    if (!dateOfBirth) {
-        return null;
-    }
+export function validateDateOfBirth(dateOfBirth: string): string {
+    if (!dateOfBirth) return "";
 
     const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
     if (!dateRegex.test(dateOfBirth)) {
@@ -86,12 +76,8 @@ export function validateDateOfBirth(dateOfBirth: string): string | null {
 
     const inputDate = new Date(dateOfBirth);
     const today = new Date();
-    if (isNaN(inputDate.getTime())) {
-        return "Invalid date";
-    }
-    if (inputDate >= today) {
-        return "Date of birth must be before today";
-    }
+    if (isNaN(inputDate.getTime())) return "Invalid date";
+    if (inputDate >= today) return "Date of birth must be before today";
 
-    return null;
+    return "";
 }

@@ -8,6 +8,7 @@ import {useSignInFormContext} from "./SignInContext.tsx";
 import SignInEmail from "./SignInEmail.tsx";
 import SignInPassword from "./SignInPassword.tsx";
 import {signIn} from "../../../api/Auth.ts";
+import {validateEmail} from "../AuthValidator.ts";
 
 export default function SignInForm() {
     const {email, password, isFormValid} = useSignInFormContext();
@@ -61,7 +62,7 @@ export default function SignInForm() {
     return (
         <div className="auth-container">
             <form className="auth-form" onSubmit={handleSubmit}>
-                <SignInEmail/>
+                <SignInEmail validateEmail={validateEmail}/>
                 <SignInPassword/>
 
                 <FormControlLabel sx={keepSignedInButtonStyle}

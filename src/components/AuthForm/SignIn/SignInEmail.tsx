@@ -3,22 +3,17 @@ import React, {useState} from "react";
 import {FormControl, FormHelperText, OutlinedInput} from "@mui/material";
 import {useSignInFormContext} from "./SignInContext.tsx";
 
-function validateEmail(email: string): string {
-    if (!email) return "Email is required";
-
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!regex.test(email)) return "Invalid email format";
-
-    return "";
+interface Props {
+    validateEmail: (value: string) => string;
 }
 
-export default function SignInEmail() {
+export default function SignInEmail(props: Props) {
     const {email, updateEmail} = useSignInFormContext();
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        const error = validateEmail(value);
+        const error = props.validateEmail(value);
         setErrorMessage(error);
         updateEmail({value, isValid: !error, touched: true, errorMessage: error});
     };
