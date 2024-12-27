@@ -12,22 +12,21 @@ interface Props {
 
 export default function SignUpEmail(props: Props) {
     const {email, updateEmail} = useSignUpFormContext();
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>("");
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const error = props.validateEmail(value);
-        updateEmailField(value, error);
+        setIsLoaded(false);
+        updateEmailField(value, error, false);
     };
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isDebouncing, setIsDebouncing] = useState<boolean>(false);
     const [debouncedEmail, setDebouncedEmail] = useState<string>("");
     useEffect(() => {
-        setIsDebouncing(true);
         const handler = setTimeout(() => {
             setDebouncedEmail(email.value);
-            setIsDebouncing(false);
         }, 500);
         return () => clearTimeout(handler);
     }, [email.value]);
@@ -40,24 +39,26 @@ export default function SignUpEmail(props: Props) {
         checkUserExistsByEmail(debouncedEmail)
             .then((data) => {
                 const exist = data.data as boolean;
-                if (exist) updateEmailField(email.value, "This email is already in use");
+                const error = exist ? "This email is already in use." : "";
+                updateEmailField(email.value, error, true);
             })
             .catch(() => {
             })
             .finally(() => {
                 setIsLoading(false);
+                setIsLoaded(true);
             });
     }, [debouncedEmail]);
 
     const checkUserExistsIcon = () => {
-        if (!email.touched || isDebouncing) return null;
+        if (!email.touched || (!isLoaded && !isLoading)) return null;
         if (isLoading) return <CircularProgress size="20px"/>;
         return errorMessage ? <ErrorIcon color="error"/> : <CheckCircle color="success"/>;
     };
 
-    const updateEmailField = (value: string, errorMessage: string) => {
+    const updateEmailField = (value: string, errorMessage: string, isLoaded: boolean) => {
         setErrorMessage(errorMessage);
-        updateEmail({value, isValid: !isDebouncing && !errorMessage, touched: true, errorMessage});
+        updateEmail({value, isValid: isLoaded && !errorMessage, touched: true, errorMessage});
     };
 
     return (
