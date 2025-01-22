@@ -39,3 +39,12 @@ export const checkUserExistsByEmail = async (email: string) => {
     const response = await apiClient.get(`/users/exists?email=${email}`);
     return response.data;
 };
+
+export const verifyUser = async (token: string) => {
+    const response = await apiClient.post(`/users/verify`, undefined, {
+        headers: {
+            "Verification-Token": `${token}`,
+        },
+    });
+    return response.data;
+};
